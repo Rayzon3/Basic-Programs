@@ -1,4 +1,5 @@
 #include<iostream>
+#include<queue>
 using namespace std;
 
 struct Node{
@@ -58,6 +59,20 @@ int Max(Node* rootPtr){
     return Max(rootPtr -> right);
 }
 
+void LevelOrder(Node *rootPtr){
+    if(rootPtr == NULL) return;
+    queue<Node*> Q;
+    Q.push(rootPtr);
+    while(!Q.empty()){
+        Node* current = Q.front();
+        cout<<current -> data<<" ";
+        if(current -> left != NULL) Q.push(current -> left);
+        if(current -> right != NULL) Q.push(current -> right);
+        Q.pop(); // removing element in the front
+    }
+    
+}
+
 
 
 int main(){
@@ -79,7 +94,10 @@ int min, max;
 min = Min(rootPtr);
 max = Max(rootPtr);
 cout<<"Max number: "<<max<<endl;
-cout<<"Min number: "<<min<<endl;            
+cout<<"Min number: "<<min<<endl;     
+    
+cout<<"Level Order Traversal: ";
+LevelOrder(rootPtr);
 
 return 0;
 }
