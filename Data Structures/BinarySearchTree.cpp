@@ -73,6 +73,26 @@ void LevelOrder(Node *rootPtr){
     
 }
 
+void Preorder(Node *rootPtr){
+    if(rootPtr == NULL) return;
+    cout<<rootPtr -> data<<" ";
+    Preorder(rootPtr -> left);
+    Preorder(rootPtr -> right);
+}
+
+void Inorder(Node *rootPtr){
+    if(rootPtr == NULL) return;
+    Inorder(rootPtr -> left);
+    cout<<rootPtr -> data<<" ";
+    Inorder(rootPtr -> right);
+}
+
+void Postorder(Node *rootPtr){
+    if(rootPtr == NULL) return;
+    Postorder(rootPtr -> left);
+    Postorder(rootPtr -> right);
+    cout<<rootPtr -> data<<" ";
+}
 
 
 int main(){
@@ -98,6 +118,15 @@ cout<<"Min number: "<<min<<endl;
     
 cout<<"Level Order Traversal: ";
 LevelOrder(rootPtr);
+cout<<endl;
+cout<<"Preorder Traversal: ";
+Preorder(rootPtr);
+cout<<endl;
+cout<<"Inorder Traversal: ";
+Inorder(rootPtr);
+cout<<endl;
+cout<<"Postorder Traversal: ";
+Postorder(rootPtr);
 
 return 0;
 }
