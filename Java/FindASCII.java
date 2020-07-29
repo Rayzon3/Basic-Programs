@@ -7,7 +7,7 @@ public class FindAsciiVal {
         System.out.println("Enter the character of which you want ASCII value: ");
         character = input.next().charAt(0);
         
-        int ascii = (int) character;
+        int ascii = (int) character; // casting char as int
 
         System.out.println("The ASCII value for " + character + " is " + ascii);
     }
