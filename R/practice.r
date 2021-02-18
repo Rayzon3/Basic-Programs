@@ -29,3 +29,23 @@ age <- c(21, 22, 23, 24)
 language <- c("C", "Java", "Python", "Dart")
 df <- data.frame(name, age, language)
 str(df)
+
+
+arr <- array(c(1 : 9))
+str(arr)
+arr
+
+arr <- array(c(1 : 9), dim = c(3, 3, 1))
+arr
+
+v1 <- c(1, 2, 3, 4, 5, 6)
+v2 <- c(4, 4, 5, 9, 76, 43, 2, 2)
+arr <- array(c(v1, v2), dim = c(3, 3, 1))
+arr
+arr <- array(c(v1, v2))
+arr
+
+blood <- c("B", "A", "AB", "O")
+blood_factor <- factor(blood)
+blood_factor
+str(blood_factor)
