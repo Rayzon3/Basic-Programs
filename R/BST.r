@@ -67,7 +67,7 @@ x <- node.new(1)
 x <- node.put(x, 15)
 x <- node.put(x, 2)
 x <- node.put(x, 21)
-x <- node.put(x, 1)
+x <- node.put(x, 11)
 x <- node.put(x, -23)
 x <- node.put(x, 0)
 
