@@ -52,6 +52,7 @@ node.postorder <- function(node){
   print(node$data)
 }
 
+#preorder traversal
 node.preorder <- function(node){
   print(node$data)
   if(!is.null(node$left)){
