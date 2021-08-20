@@ -69,12 +69,7 @@ int main(){
         v_per_w[i] = value[i]/weight[i];
     }
 
-
     sort(v_per_w, 0, n);
-    for(int i = 0; i < n; i++){
-        printf("%d ", v_per_w[i]);
-    }
-    printf("\n");
 
     fillSack(value, weight, v_per_w, n);
 
