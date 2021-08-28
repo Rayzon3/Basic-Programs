@@ -71,6 +71,46 @@ void avgTime(int processes[], int n, int bt[]){
     int t=(float)total_tat / (float)n;
     printf("Average waiting time = %d \n",s);
     printf("Average turn around time = %d \n",t);
+
+    red();
+    for(int i = 0; i < (tat[n - 1] + n*18); i++){
+        printf("-");
+    }
+    printf("\n");
+    printf(" | ");
+    for(int i = 0; i < n; i++){
+        (*func_Pointer[i])();
+        int x =  bt[i]/2;
+        for(int i = 0; i < x; i++){
+            printf("#");
+        }
+        printf(" Process %d (%d) ", processes[i], bt[i]);
+        for(int i = 0; i < x; i++){
+            printf("#");
+        }
+        printf(" | ");
+    }
+    printf("\n");
+    for(int i = 0; i < (tat[n - 1] + n*18); i++){
+        printf("-");
+    }
+    printf("\n");
+    for(int i = 0; i < n; i++){
+        (*func_Pointer[i])();
+        printf("  %d ", wt[i]);
+        int x =  bt[i]/2;
+        for(int i = 0; i < x; i++){
+            printf(" ");
+        }
+        printf("             ");
+        for(int i = 0; i < x; i++){
+            printf(" ");
+        }
+        if(i == n - 1){
+            printf("%d", tat[i]);
+        }
+    }
+    printf("\n");
 }
 
 int main(){
@@ -86,19 +126,6 @@ int main(){
 
     avgTime(processes, n, burst_time);
 
-    printf("------------------------------------------------------------------\n");
-    cyan();
-    printf("\t \t \tGantt Chart\n");
-    reset();
-    printf("------------------------------------------------------------------\n");
-    for(int i = 0; i < n; i++){
-        (*func_Pointer[i])();
-        printf("|#Process %d (%d)", i, burst_time[i]);
-        for(int j = 0; j < burst_time[i]; j++){
-            printf("#");
-        }
-        printf("|");
-    }
     printf("\n");
     return 0; 
 }
