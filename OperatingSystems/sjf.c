@@ -44,8 +44,9 @@ struct Process{
 }process[5], temp;
 
 int main(){
- 
-    int n = 5;
+    int n;
+    printf("Enter the number of Processes: ");
+    scanf("%d", &n);
    
     printf("Enter burst time for the following processes: \n");
     for(int i = 0; i < n; i++){
@@ -66,7 +67,6 @@ int main(){
             }
         }
     }
-
     //waiting time
     process[0].wt = 0;
     for(int i = 1; i < n; i++){
@@ -102,13 +102,45 @@ int main(){
     printf("\t \t \tGantt Chart\n");
     reset();
     printf("------------------------------------------------------------------\n");
+    //Grantt Chart Formatting
+    red();
+    for(int i = 0; i < (process[n - 1].tat + n*18); i++){
+        printf("-");
+    }
+    printf("\n");
+    printf(" | ");
     for(int i = 0; i < n; i++){
         (*func_Pointer[i])();
-        printf("|#Process %d (%d)", process[i].ID, process[i].burst_time);
-        for(int j = 0; j < process[i].burst_time; j++){
+        int x =  process[i].burst_time/2;
+        for(int i = 0; i < x; i++){
             printf("#");
         }
-        printf("|");
+        printf(" Process %d (%d) ", process[i].ID, process[i].burst_time);
+        for(int i = 0; i < x; i++){
+            printf("#");
+        }
+        printf(" | ");
     }
+    printf("\n");
+    for(int i = 0; i < (process[n - 1].tat + n*18); i++){
+        printf("-");
+    }
+    printf("\n");
+    for(int i = 0; i < n; i++){
+        (*func_Pointer[i])();
+        printf("  %d ", process[i].wt);
+        int x =  process[i].burst_time/2;
+        for(int i = 0; i < x; i++){
+            printf(" ");
+        }
+        printf("              ");
+        for(int i = 0; i < x; i++){
+            printf(" ");
+        }
+        if(i == n - 1){
+            printf("%d", process[i].tat);
+        }
+    }
+    printf("\n");
     return 0;
 }
