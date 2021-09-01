@@ -1,77 +1,79 @@
-//Implementation of graph adjacency list
+//undirected graph
 
 #include<stdio.h>
 #include<stdlib.h>
 
 struct Node{
-	int data;
-	struct Node* next;
+    int data;
+    struct Node* next;
 };
 
-struct List{
-	struct Node* head;
+struct AdjList{
+    struct Node* head;
 };
 
 struct Graph{
-	int V;
-	struct List* array;
+    int V;
+    struct AdjList* array;
 };
 
-struct Node* MakeNewNode(int x){
-	struct Node* newNode = malloc(sizeof(struct Node));
-	newNode -> data = x;
-	newNode -> next = NULL;
+struct Node* makeNewNode(int data){
+    struct Node* newNode = malloc(sizeof(struct Node));
+    newNode -> data = data;
+    newNode -> next = NULL;
 
-	return newNode;
+    return newNode; 
 }
 
-struct Graph* MakeGraph(int v){
-	struct Graph* graph = malloc(sizeof(struct Graph));
+struct Graph* makeGraph(int V){
+    struct Graph* graph = malloc(sizeof(struct Graph));
+    graph -> V = V;
+    graph -> array = malloc(V * sizeof(struct AdjList));
 
-	graph -> V = v;
-	graph -> array = malloc(sizeof(struct List)*v);
+    //init
+    for(int i = 0; i < V; i++){
+        graph -> array[i].head = NULL;
+    }
 
-	for(int i = 0; i < v; i++){
-		graph -> array[i].head = NULL;
-	}
-
-	return graph;
+    return graph;
 }
 
-void AddEdge(struct Graph* graph, int src, int des){
-	struct Node* temp = MakeNewNode(des);
-	temp -> next = graph -> array[src].head;
-	graph -> array[src].head = temp;
+void addEdge(struct Graph* graph, int src, int dest){
+    struct Node* newNode = makeNewNode(dest);
+    newNode -> next = graph -> array[src].head;
+    graph -> array[src].head = newNode;
+
+    //dest to src
+    newNode = makeNewNode(src);
+    newNode -> next = graph -> array[dest].head;
+    graph -> array[dest].head = newNode;
 }
 
-void Print(struct Graph* graph){
-	for(int i = 0; i < graph -> V; i++){
-		struct Node* temp = graph -> array[i].head;
-		printf("\n Adjacency list of vertex %d \n head", i);
-		while(temp != NULL){
-			printf(" -> %d", temp -> data);
-			temp = temp -> next;
-		}
-		printf("\n");
-	}
+void printGraph(struct Graph* graph){
+    for(int v = 0; v < graph -> V; v++){
+        struct Node* pCrawl = graph -> array[v].head;
+        printf("\n Adjacency list of vertex %d \n head ", v);
+        while(pCrawl){
+            printf("-> %d", pCrawl -> data);
+            pCrawl = pCrawl -> next;
+        }
+        printf("\n");
+    }
 }
-
 
 int main(){
-	
-	int v = 5;
 
-	printf("Enter the number of vertices the graph has : \n");
-	struct Graph* graph = MakeGraph(v);
-	AddEdge(graph, 0, 1);
-    AddEdge(graph, 0, 4);
-    AddEdge(graph, 1, 2);
-    AddEdge(graph, 1, 3);
-    AddEdge(graph, 1, 4);
-    AddEdge(graph, 2, 3);
-    AddEdge(graph, 3, 4);
+    int V = 5;
+    struct Graph* graph = makeGraph(V);
+    addEdge(graph, 0, 1);
+    addEdge(graph, 0, 4);
+    addEdge(graph, 1, 2);
+    addEdge(graph, 1, 3);
+    addEdge(graph, 1, 4);
+    addEdge(graph, 2, 3);
+    addEdge(graph, 3, 4);
 
-	Print(graph);
-	
-	return 0;
+    printGraph(graph);
+
+    return 0;
 }
