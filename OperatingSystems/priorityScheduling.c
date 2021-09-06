@@ -40,24 +40,112 @@ struct Process{
     int burst_time;
     int wt;
     int tat;
+    int priority;
 }process[5], temp;
 
 int main(){
 
-    int n, q;
+    int n;
     printf("Enter the number of Processes: ");
     scanf("%d", &n);
-   
-    printf("Enter burst time for the following processes: \n");
+
+    printf("Enter priority and BT for the following processes: \n");
     for(int i = 0; i < n; i++){
         printf("Enter burst time for process with ID: %d -> ", i + 1);
         scanf("%d", &process[i].burst_time);
-        process[i].ID = i + 1;
-        
+        printf("Enter priority for process with ID: %d -> ", i + 1);
+        scanf("%d", &process[i].priority);
+        process[i].ID = i + 1;  
     }
 
-    printf("Enter the time quantum: ");
-    scanf("%d", &q);
+    //sort
+    for(int j = 0; j < n; j++){
+        for(int i = 0; i < n; i++){
+            if(process[i].priority > process[j].priority){
+                //swap
+                temp = process[j];
+                process[j] = process[i];
+                process[i] = temp;
+            }
+        }
+    }
 
+    //waiting time
+    process[0].wt = 0;
+    for(int i = 1; i < n; i++){
+        process[i].wt = process[i - 1].burst_time + process[i - 1].wt;
+    }
+
+    //turn around time
+    for(int i = 0; i < n; i++){
+        process[i].tat = process[i].burst_time + process[i].wt;
+    }
+
+    //average time
+    int total_wt = 0, total_tat = 0;
+    printf("-----------------------------------------------------------------------------\n");
+    printf("Process_ID   Burst time   Priority   Waiting time   Turn around time\n");
+    printf("-----------------------------------------------------------------------------\n");
+    for(int i = 0; i < n; i++){
+        total_wt = total_wt + process[i].wt;
+        total_tat = total_tat + process[i].tat;
+        printf("   %d ", process[i].ID);
+        printf("            %d ", process[i].burst_time);
+        printf("            %d  ", process[i].priority);
+        printf("           %d",process[i].wt);
+        printf("                %d\n",process[i].tat);
+        printf("-------------------------------------------------------------------------\n");
+    }
+    int s=(float)total_wt / (float)n;
+    int t=(float)total_tat / (float)n;
+    printf("Average waiting time = %d \n",s);
+    printf("Average turn around time = %d \n",t);
+
+    printf("------------------------------------------------------------------\n");
+    cyan();
+    printf("\t \t \tGantt Chart\n");
+    reset();
+    printf("------------------------------------------------------------------\n");
+    //Grantt Chart Formatting
+    red();
+    for(int i = 0; i < (process[n - 1].tat + n*18); i++){
+        printf("-");
+    }
+    printf("\n");
+    printf(" | ");
+    for(int i = 0; i < n; i++){
+        (*func_Pointer[i])();
+        int x =  process[i].burst_time/2;
+        for(int i = 0; i < x; i++){
+            printf("#");
+        }
+        printf(" Process %d (%d) ", process[i].ID, process[i].burst_time);
+        for(int i = 0; i < x; i++){
+            printf("#");
+        }
+        printf(" | ");
+    }
+    printf("\n");
+    for(int i = 0; i < (process[n - 1].tat + n*18); i++){
+        printf("-");
+    }
+    printf("\n");
+    for(int i = 0; i < n; i++){
+        (*func_Pointer[i])();
+        printf("  %d ", process[i].wt);
+        int x =  process[i].burst_time/2;
+        for(int i = 0; i < x; i++){
+            printf(" ");
+        }
+        printf("              ");
+        for(int i = 0; i < x; i++){
+            printf(" ");
+        }
+        if(i == n - 1){
+            printf("%d", process[i].tat);
+        }
+    }
+    printf("\n");
+   
     return 0;
 }
