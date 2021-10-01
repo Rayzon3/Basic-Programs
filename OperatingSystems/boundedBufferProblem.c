@@ -4,26 +4,42 @@
 int mutex = 1;
 int full = 0;
 int empty = 10, x = 0;
+ 
+int Signal(int y){
+    return ++y;
+}
+
+int Wait(int y){
+    return --y;
+}
 
 void producer(){
-    --mutex;
-    ++full;
-    --empty;
+    //--mutex; 
+    mutex = Wait(mutex);
+    //++full;
+    full = Signal(full);
+    //--empty; 
+    empty = Wait(empty); 
 
     // item produced
     x++;
     printf("Producer produced item : %d \n", x);
-    ++mutex;
+    //++mutex;
+    mutex = Signal(mutex); 
 }
 
 void consumer(){
-    --mutex;
-    --full;
-    ++empty;
+    //--mutex; 
+    mutex = Wait(mutex);
+    //--full; 
+    full = Wait(full);
+    //++empty; 
+    empty = Signal(empty);
 
     printf("Consumer consumed item : %d \n", x);
-    x--;
-    ++mutex;
+    x--; 
+    //++mutex;
+    mutex = Signal(mutex);
 }
 
 int main(){
