@@ -33,7 +33,7 @@ int main(){
     int n = sizeof(val)/sizeof(val[0]);
     int W = MAX;
 
-    printf("%d \n", knapSack(wt, val, n, W));
+    printf("Maximum value that can be stored in sack: %d \n", knapSack(wt, val, n, W));
 
     return 0;
 }
