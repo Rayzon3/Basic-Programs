@@ -1,41 +1,35 @@
-#include<stdio.h>
-#include<stdlib.h>
-
-int main(){
-
-    int string[] = {4, 1, 2, 4, 5};
-    int nFrames = 3;
-    int frame[nFrames];
-    int pageFaults = 0;
-    int j = 0;
-
-    //init empty frame slots to -1 
-    for(int k = 0; k < sizeof(frame)/sizeof(frame[0]); k++){
-        frame[k] = -1;
-    }
-
-    for(int i = 0; i < sizeof(string)/sizeof(string[0]); i++){
-        if(j == nFrames){
-            j = 0; 
-            printf("------\n");
-            for(int k = 0; k < sizeof(frame)/sizeof(frame[0]); k++){
-                printf("%d \n", frame[k]);
-            }
+#include <stdio.h>
+int main()
+{
+    int i, j, n, a[50], frame[10], no, k, avail, count = 0;
+    printf("Enter the number of pages\n");
+    scanf("%d", &n);
+    printf("Enter pages numbers\n");
+    for (i = 1; i <= n; i++)
+        scanf("%d", &a[i]);
+    printf("Enter the number of frames: ");
+    scanf("%d", &no);
+    for (i = 0; i < no; i++)
+        frame[i] = -1;
+    j = 0;
+    printf("ref string\t page frames\n");
+    for (i = 1; i <= n; i++)
+    {
+        printf("%d\t\t", a[i]);
+        avail = 0;
+        for (k = 0; k < no; k++)
+            if (frame[k] == a[i])
+                avail = 1;
+        if (avail == 0)
+        {
+            frame[j] = a[i];
+            j = (j + 1) % no;
+            count++;
+            for (k = 0; k < no; k++)
+                printf("%d\t", frame[k]);
         }
-        if(frame[j] != string[i]){
-            frame[j] = string[i];
-            j++;
-            pageFaults++;
-            printf("------\n");
-            for(int k = 0; k < sizeof(frame)/sizeof(frame[0]); k++){
-                printf("%d \n", frame[k]);
-            }
-        }
-        
+        printf("\n");
     }
-    
-
-    printf("Number of page faults = %d", pageFaults);
-
+    printf("Page Fault Is %d", count);
     return 0;
 }
