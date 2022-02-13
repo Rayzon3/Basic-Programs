@@ -1,4 +1,6 @@
 /* add all elements in a list */
 
-sumList([], 0).
-sumList([H|T, N]) :- sumList(T,N1),N is N1+H.
+sum_list([], 0).
+sum_list([H|T], Sum) :-
+   sum_list(T, Rest),
+   Sum is H + Rest.
