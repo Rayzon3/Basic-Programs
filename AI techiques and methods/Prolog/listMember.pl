@@ -1,2 +1,2 @@
 member(X,[X|_]).
-member(X,[_|X]) :- member(X,T).
+member(X,[_|T]):-member(X,T).

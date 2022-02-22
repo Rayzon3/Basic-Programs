@@ -1,6 +1,4 @@
 /* add all elements in a list */
 
 sum_list([], 0).
-sum_list([H|T], Sum) :-
-   sum_list(T, Rest),
-   Sum is H + Rest.
+sum_list([H|T], Sum) :- sum_list(T, Rest), Sum is H + Rest.
